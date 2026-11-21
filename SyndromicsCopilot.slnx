@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Syndromics.Copilot.Cli/Syndromics.Copilot.Cli.csproj" />
+    <Project Path="src/Syndromics.Copilot/Syndromics.Copilot.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Syndromics.Copilot.SelfTest/Syndromics.Copilot.SelfTest.csproj" />
+  </Folder>
+</Solution>

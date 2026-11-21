@@ -1,0 +1,457 @@
+{
+ "meta": {
+  "syndromics_version": "0.5.1",
+  "backend": "ibm_kingston",
+  "label": "ibm_kingston (IBM Quantum hardware)",
+  "fake": false,
+  "run_at_utc": "2026-11-19T09:32:06+00:00",
+  "calibration_last_updated": "2026-11-19 05:36:23+05:30",
+  "python": "3.14.0"
+ },
+ "job_id": "dbvc3lv82tmc73dupa7g",
+ "line": [
+  117,
+  105,
+  106,
+  107,
+  108,
+  109,
+  118,
+  129,
+  128
+ ],
+ "rounds": 10,
+ "shots": 30000,
+ "decoding": {
+  "tests": [
+   {
+    "test": "random split 1",
+    "uniform": 0.004333333333333333,
+    "calibration": 0.004333333333333333,
+    "reweighting": 0.0015333333333333334,
+    "syndromics": 0.0012,
+    "syndromics_la": 0.0008,
+    "reweighting_la": 0.0006
+   },
+   {
+    "test": "random split 2",
+    "uniform": 0.0042,
+    "calibration": 0.0036,
+    "reweighting": 0.0012,
+    "syndromics": 0.0009333333333333333,
+    "syndromics_la": 0.0002666666666666667,
+    "reweighting_la": 0.0003333333333333333
+   },
+   {
+    "test": "random split 3",
+    "uniform": 0.004266666666666667,
+    "calibration": 0.004066666666666666,
+    "reweighting": 0.0016666666666666668,
+    "syndromics": 0.0011333333333333334,
+    "syndromics_la": 0.00046666666666666666,
+    "reweighting_la": 0.0005333333333333334
+   },
+   {
+    "test": "random split 4",
+    "uniform": 0.0044666666666666665,
+    "calibration": 0.004066666666666666,
+    "reweighting": 0.0012666666666666666,
+    "syndromics": 0.0008666666666666666,
+    "syndromics_la": 0.00046666666666666666,
+    "reweighting_la": 0.0006666666666666666
+   },
+   {
+    "test": "random split 5",
+    "uniform": 0.0044666666666666665,
+    "calibration": 0.0042,
+    "reweighting": 0.0015333333333333334,
+    "syndromics": 0.0010666666666666667,
+    "syndromics_la": 0.0002666666666666667,
+    "reweighting_la": 0.0006
+   },
+   {
+    "test": "time split (first half -> second half)",
+    "uniform": 0.004533333333333334,
+    "calibration": 0.004,
+    "reweighting": 0.0011333333333333334,
+    "syndromics": 0.0008666666666666666,
+    "syndromics_la": 0.0003333333333333333,
+    "reweighting_la": 0.0002666666666666667
+   }
+  ],
+  "mean": {
+   "uniform": 0.004377777777777778,
+   "calibration": 0.004044444444444444,
+   "reweighting": 0.0013888888888888892,
+   "syndromics": 0.001011111111111111,
+   "reweighting_la": 0.0005,
+   "syndromics_la": 0.00043333333333333337
+  },
+  "shots": 30000,
+  "test_shots": 15000,
+  "raw_flip_rate": 0.0066,
+  "sparsity": 0.5
+ },
+ "changed_components": [
+  {
+   "component": "q129-q128 two-qubit gate",
+   "ratio": 14.589973894730353,
+   "err": 0.6390475984298765,
+   "calibration": 0.0011645866364793922,
+   "measured": 0.016991288624386158
+  },
+  {
+   "component": "q105 measurement",
+   "ratio": 4.983485939099667,
+   "err": 0.06761897102807184,
+   "calibration": 0.001953125,
+   "measured": 0.009733370974804038
+  },
+  {
+   "component": "q109 measurement",
+   "ratio": 3.1834664627152427,
+   "err": 0.051995168290245725,
+   "calibration": 0.00439453125,
+   "measured": 0.013989842853729093
+  },
+  {
+   "component": "q107 measurement",
+   "ratio": 2.5623641326252713,
+   "err": 0.031119126226344707,
+   "calibration": 0.01025390625,
+   "measured": 0.026274241594302097
+  },
+  {
+   "component": "q128 measurement",
+   "ratio": 2.551562291583266,
+   "err": 0.1088517503231068,
+   "calibration": 0.00732421875,
+   "measured": 0.018688200377807124
+  }
+ ],
+ "bursts": {
+  "k": 6,
+  "real": 0.0243,
+  "model": 0.0013,
+  "per_qubit_real": [
+   0.003833333333333333,
+   0.006266666666666667,
+   0.007533333333333334,
+   0.007066666666666666
+  ],
+  "anc": [
+   1,
+   3,
+   5,
+   7
+  ]
+ },
+ "drift": {
+  "alerts": [
+   {
+    "window": 6,
+    "first_seen": 5,
+    "component": "q108-q109 two-qubit gate",
+    "before": 0.19044928352161658,
+    "now": 1.941296243064139,
+    "z": 8.683938467090124
+   }
+  ],
+  "windows": [
+   {
+    "q117-q105 two-qubit gate": 2.9996366938525734,
+    "q106-q107 two-qubit gate": 0.8693500372839713,
+    "q108-q109 two-qubit gate": 0.0,
+    "q118-q129 two-qubit gate": 1.5898267772995656,
+    "q105-q106 two-qubit gate": 0.0,
+    "q107-q108 two-qubit gate": 0.0,
+    "q109-q118 two-qubit gate": 0.0,
+    "q129-q128 two-qubit gate": 13.282669065250666,
+    "q105 measurement": 4.564414564712802,
+    "q107 measurement": 2.550983869661419,
+    "q109 measurement": 3.4718905085168403,
+    "q129 measurement": 1.1455564946773305,
+    "q117 idle/single-qubit": 0.0,
+    "q106 idle/single-qubit": 0.0,
+    "q108 idle/single-qubit": 0.05314567091545497,
+    "q118 idle/single-qubit": 0.035993476055337766,
+    "q128 idle/single-qubit": 0.0,
+    "q117 measurement": 2.0487273768173946,
+    "q106 measurement": 0.4495158598003292,
+    "q108 measurement": 1.0878829427543273,
+    "q118 measurement": 0.7461405514816952,
+    "q128 measurement": 2.098675653317697
+   },
+   {
+    "q117-q105 two-qubit gate": 0.8161418658303713,
+    "q106-q107 two-qubit gate": 1.7035050146002844,
+    "q108-q109 two-qubit gate": 1.2721842799111993,
+    "q118-q129 two-qubit gate": 0.9266194357846498,
+    "q105-q106 two-qubit gate": 0.0,
+    "q107-q108 two-qubit gate": 0.0,
+    "q109-q118 two-qubit gate": 0.0,
+    "q129-q128 two-qubit gate": 13.651116819919585,
+    "q105 measurement": 4.66783634195694,
+    "q107 measurement": 2.398881636749712,
+    "q109 measurement": 3.0345214593718777,
+    "q129 measurement": 1.4524801152135725,
+    "q117 idle/single-qubit": 0.0,
+    "q106 idle/single-qubit": 0.0,
+    "q108 idle/single-qubit": 0.017571124619479628,
+    "q118 idle/single-qubit": 0.013305562024941162,
+    "q128 idle/single-qubit": 0.0,
+    "q117 measurement": 1.4366068440832105,
+    "q106 measurement": 0.4798019299478219,
+    "q108 measurement": 1.454001618860769,
+    "q118 measurement": 0.7097150908356646,
+    "q128 measurement": 3.0979361537756325
+   },
+   {
+    "q117-q105 two-qubit gate": 4.777381074440172,
+    "q106-q107 two-qubit gate": 0.34024001264575787,
+    "q108-q109 two-qubit gate": 0.0,
+    "q118-q129 two-qubit gate": 0.0,
+    "q105-q106 two-qubit gate": 0.0,
+    "q107-q108 two-qubit gate": 0.0,
+    "q109-q118 two-qubit gate": 0.0,
+    "q129-q128 two-qubit gate": 16.465205021660143,
+    "q105 measurement": 4.00052274807925,
+    "q107 measurement": 2.502479413928345,
+    "q109 measurement": 3.4439223194778217,
+    "q129 measurement": 1.2456014023707658,
+    "q117 idle/single-qubit": 0.0,
+    "q106 idle/single-qubit": 0.0,
+    "q108 idle/single-qubit": 0.03492118278092171,
+    "q118 idle/single-qubit": 0.03130499886021606,
+    "q128 idle/single-qubit": 0.0,
+    "q117 measurement": 0.7311418223993338,
+    "q106 measurement": 0.6499042885756752,
+    "q108 measurement": 1.6088191302424921,
+    "q118 measurement": 0.8172726730988343,
+    "q128 measurement": 2.9031135437078865
+   },
+   {
+    "q117-q105 two-qubit gate": 1.7669420544137642,
+    "q106-q107 two-qubit gate": 0.9088085384929507,
+    "q108-q109 two-qubit gate": 0.0,
+    "q118-q129 two-qubit gate": 0.0,
+    "q105-q106 two-qubit gate": 0.0,
+    "q107-q108 two-qubit gate": 0.0,
+    "q109-q118 two-qubit gate": 0.0,
+    "q129-q128 two-qubit gate": 14.984324272526953,
+    "q105 measurement": 5.12080566120966,
+    "q107 measurement": 2.610018878627038,
+    "q109 measurement": 3.232341351821855,
+    "q129 measurement": 1.2398636521956408,
+    "q117 idle/single-qubit": 0.0,
+    "q106 idle/single-qubit": 0.03808270651437651,
+    "q108 idle/single-qubit": 0.02594225310491316,
+    "q118 idle/single-qubit": 0.0026903601943092073,
+    "q128 idle/single-qubit": 0.0,
+    "q117 measurement": 1.588164939862145,
+    "q106 measurement": 0.5068108375599819,
+    "q108 measurement": 1.376927931809663,
+    "q118 measurement": 0.7215930407448855,
+    "q128 measurement": 3.2375536837379872
+   },
+   {
+    "q117-q105 two-qubit gate": 3.5159916378913203,
+    "q106-q107 two-qubit gate": 0.0,
+    "q108-q109 two-qubit gate": 1.8325434731737458,
+    "q118-q129 two-qubit gate": 0.0,
+    "q105-q106 two-qubit gate": 0.0,
+    "q107-q108 two-qubit gate": 0.0,
+    "q109-q118 two-qubit gate": 0.0,
+    "q129-q128 two-qubit gate": 17.000319608552097,
+    "q105 measurement": 4.274849400536944,
+    "q107 measurement": 2.657431908844139,
+    "q109 measurement": 2.967903939239643,
+    "q129 measurement": 1.1937742076957345,
+    "q117 idle/single-qubit": 0.0,
+    "q106 idle/single-qubit": 0.0,
+    "q108 idle/single-qubit": 0.006923026048205383,
+    "q118 idle/single-qubit": 0.039268843758300864,
+    "q128 idle/single-qubit": 0.0,
+    "q117 measurement": 0.5489568239186285,
+    "q106 measurement": 0.7570136417751775,
+    "q108 measurement": 1.3958016923520546,
+    "q118 measurement": 0.43284358553706703,
+    "q128 measurement": 2.4383000573334748
+   },
+   {
+    "q117-q105 two-qubit gate": 1.3762284504091942,
+    "q106-q107 two-qubit gate": 1.6003580043519854,
+    "q108-q109 two-qubit gate": 1.941296243064139,
+    "q118-q129 two-qubit gate": 0.7303746186826398,
+    "q105-q106 two-qubit gate": 0.0,
+    "q107-q108 two-qubit gate": 0.0,
+    "q109-q118 two-qubit gate": 0.0,
+    "q129-q128 two-qubit gate": 16.29456189866964,
+    "q105 measurement": 5.021024659944681,
+    "q107 measurement": 2.659473415133254,
+    "q109 measurement": 3.0499524999335783,
+    "q129 measurement": 1.0772578110639517,
+    "q117 idle/single-qubit": 0.0,
+    "q106 idle/single-qubit": 0.0,
+    "q108 idle/single-qubit": 0.04335157997497552,
+    "q118 idle/single-qubit": 0.06834420455558904,
+    "q128 idle/single-qubit": 0.0,
+    "q117 measurement": 0.7021197370067914,
+    "q106 measurement": 0.6784325804027147,
+    "q108 measurement": 1.2013364087857978,
+    "q118 measurement": 0.7701945160190947,
+    "q128 measurement": 1.6173548448427297
+   }
+  ]
+ },
+ "agreement": {
+  "syndromics_vs_today_reference": 0.5889089755231407,
+  "syndromics_vs_ibm_calibration": 0.4812508097500939,
+  "ibm_calibration_vs_today_terminal": 0.5475323502980217,
+  "gate_syndromics_vs_ibm": -0.3264679898700298,
+  "detection_rate": 0.0346310606060606,
+  "sparsity": 0.5
+ },
+ "rows": [
+  {
+   "qubit": "q117",
+   "role": "data",
+   "ibm_calibration": 0.0048828125,
+   "today_terminal": 0.0077666666666666665,
+   "today_midcircuit": 0.012780000000000001,
+   "reference": 0.0077666666666666665,
+   "syndromics": 0.00634765625,
+   "err": 0.0
+  },
+  {
+   "qubit": "q105",
+   "role": "measure",
+   "ibm_calibration": 0.001953125,
+   "today_terminal": 0.006816666666666667,
+   "today_midcircuit": 0.012153333333333334,
+   "reference": 0.012153333333333334,
+   "syndromics": 0.009615431779644128,
+   "err": 0.000136875357896834
+  },
+  {
+   "qubit": "q106",
+   "role": "data",
+   "ibm_calibration": 0.0078125,
+   "today_terminal": 0.006166666666666667,
+   "today_midcircuit": 0.013523333333333333,
+   "reference": 0.006166666666666667,
+   "syndromics": 0.004082903870262274,
+   "err": 0.0002635712085281317
+  },
+  {
+   "qubit": "q107",
+   "role": "measure",
+   "ibm_calibration": 0.01025390625,
+   "today_terminal": 0.0175,
+   "today_midcircuit": 0.01985666666666667,
+   "reference": 0.01985666666666667,
+   "syndromics": 0.025845561401184405,
+   "err": 0.0002468704009856465
+  },
+  {
+   "qubit": "q108",
+   "role": "data",
+   "ibm_calibration": 0.0048828125,
+   "today_terminal": 0.006666666666666667,
+   "today_midcircuit": 0.013066666666666667,
+   "reference": 0.006666666666666667,
+   "syndromics": 0.00634765625,
+   "err": 0.0
+  },
+  {
+   "qubit": "q109",
+   "role": "measure",
+   "ibm_calibration": 0.00439453125,
+   "today_terminal": 0.00595,
+   "today_midcircuit": 0.010956666666666667,
+   "reference": 0.010956666666666667,
+   "syndromics": 0.013290732263751208,
+   "err": 0.00024047020937772694
+  },
+  {
+   "qubit": "q118",
+   "role": "data",
+   "ibm_calibration": 0.00634765625,
+   "today_terminal": 0.0062833333333333335,
+   "today_midcircuit": 0.014246666666666666,
+   "reference": 0.0062833333333333335,
+   "syndromics": 0.00410024133900135,
+   "err": 0.00041907965696761946
+  },
+  {
+   "qubit": "q129",
+   "role": "measure",
+   "ibm_calibration": 0.0078125,
+   "today_terminal": 0.0072499999999999995,
+   "today_midcircuit": 0.014093333333333333,
+   "reference": 0.014093333333333333,
+   "syndromics": 0.009825279730940755,
+   "err": 0.00022172904794057408
+  },
+  {
+   "qubit": "q128",
+   "role": "data",
+   "ibm_calibration": 0.00732421875,
+   "today_terminal": 0.0044,
+   "today_midcircuit": 0.009186666666666668,
+   "reference": 0.0044,
+   "syndromics": 0.019343925019830142,
+   "err": 0.0008839019457971398
+  }
+ ],
+ "gates": [
+  {
+   "pair": "q117-q105",
+   "ibm_calibration": 0.0010311295710025703,
+   "syndromics": 0.0012669521265236405,
+   "err": 0.0
+  },
+  {
+   "pair": "q105-q106",
+   "ibm_calibration": 0.0011544446094509386,
+   "syndromics": 0.0003332577621571603,
+   "err": 0.0001437630250900343
+  },
+  {
+   "pair": "q106-q107",
+   "ibm_calibration": 0.0015695608439353637,
+   "syndromics": 0.0012669521265236405,
+   "err": 0.0
+  },
+  {
+   "pair": "q107-q108",
+   "ibm_calibration": 0.0024684338010654006,
+   "syndromics": 0.0,
+   "err": 7.600249773298521e-05
+  },
+  {
+   "pair": "q108-q109",
+   "ibm_calibration": 0.001290793382622557,
+   "syndromics": 0.0012669521265236405,
+   "err": 0.0
+  },
+  {
+   "pair": "q109-q118",
+   "ibm_calibration": 0.0022499243114544043,
+   "syndromics": 0.0,
+   "err": 0.0
+  },
+  {
+   "pair": "q118-q129",
+   "ibm_calibration": 0.001243110870424724,
+   "syndromics": 0.0006372622438815339,
+   "err": 0.00023675732478272915
+  },
+  {
+   "pair": "q129-q128",
+   "ibm_calibration": 0.0011645866364793922,
+   "syndromics": 0.01738246039021904,
+   "err": 0.0008673411876971068
+  }
+ ]
+}

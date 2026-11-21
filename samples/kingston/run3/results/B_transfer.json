@@ -1,0 +1,73 @@
+{
+ "run1": {
+  "line": [
+   117,
+   105,
+   106,
+   107,
+   108,
+   109,
+   118,
+   129,
+   128
+  ],
+  "n_data": 5,
+  "rounds": 10
+ },
+ "run2": {
+  "line": [
+   108,
+   109,
+   118,
+   129,
+   128
+  ],
+  "n_data": 3,
+  "rounds": 20
+ },
+ "offset": 4,
+ "test_shots": 15000,
+ "run2_calibration": {
+  "errors": 150,
+  "rate": 0.01
+ },
+ "frozen_syndromics": {
+  "errors": 69,
+  "rate": 0.0046
+ },
+ "frozen_syndromics_la": {
+  "errors": 32,
+  "rate": 0.0021333333333333334
+ },
+ "frozen_settings": {
+  "boost": 20,
+  "k": 4
+ },
+ "reweighting_on_run2": [
+  {
+   "train_shots": 1000,
+   "errors": 105,
+   "rate": 0.007
+  },
+  {
+   "train_shots": 3000,
+   "errors": 102,
+   "rate": 0.0068
+  },
+  {
+   "train_shots": 15000,
+   "errors": 77,
+   "rate": 0.0051333333333333335
+  }
+ ],
+ "syndromics_on_run2": {
+  "train_shots": 15000,
+  "errors": 71,
+  "rate": 0.004733333333333333
+ },
+ "reweighting_la_on_run2": {
+  "train_shots": 15000,
+  "errors": 19,
+  "rate": 0.0012666666666666666
+ }
+}

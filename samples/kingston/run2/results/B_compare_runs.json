@@ -1,0 +1,56 @@
+{
+ "run1": "dbukcjvf8rhs73bmf9l0",
+ "run2": "dbvc3lv82tmc73dupa7g",
+ "shots_run2": 30000,
+ "run2_calibration": {
+  "errors": 123,
+  "rate": 0.0041
+ },
+ "run1_calibration": {
+  "errors": 119,
+  "rate": 0.003966666666666667
+ },
+ "frozen_syndromics": {
+  "errors": 55,
+  "rate": 0.0018333333333333333
+ },
+ "frozen_syndromics_la": {
+  "errors": 17,
+  "rate": 0.0005666666666666667
+ },
+ "frozen_settings": {
+  "boost": 40,
+  "k": 4
+ },
+ "component_changes": [
+  {
+   "component": "q107 measurement",
+   "run1": 1.2984678318078597,
+   "run2": 2.5629189995088937,
+   "z": 4.4010344536100865
+  },
+  {
+   "component": "q108-q109 two-qubit gate",
+   "run1": 3.291404187566107,
+   "run2": 1.0,
+   "z": -4.02412478318504
+  }
+ ],
+ "bursts_run2": {
+  "k": 6,
+  "real": 0.0243,
+  "model": 0.0012,
+  "per_qubit_real": [
+   0.003833333333333333,
+   0.006266666666666667,
+   0.007533333333333334,
+   0.007066666666666666
+  ],
+  "anc": [
+   1,
+   3,
+   5,
+   7
+  ]
+ }
+}
