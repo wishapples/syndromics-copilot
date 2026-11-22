@@ -23,6 +23,9 @@ static string DefaultRuns()
 {
     foreach (var dir in new[] { "runs", "samples/kingston", "../samples/kingston", "../../samples/kingston", "../../../samples/kingston" })
         if (Directory.Exists(dir)) return dir;
+    // An MCP client may start us from any folder: also look upwards from the program's own folder.
+    for (var d = new DirectoryInfo(AppContext.BaseDirectory); d is not null; d = d.Parent)
+        if (Directory.Exists(Path.Combine(d.FullName, "samples", "kingston"))) return Path.Combine(d.FullName, "samples", "kingston");
     return ".";
 }
 
@@ -37,6 +40,7 @@ Syndromics Copilot: ask your quantum processor's noise data questions in plain E
   copilot brief                  findings, what changed and next steps, in one screen
   copilot ticket "q129-q128"     draft a ticket for the hardware team
   copilot watch [--every 30] [--webhook URL] [--once]   alert when new kit results appear
+  copilot mcp                    run as an MCP server (stdio) for Claude Desktop, VS Code, Cursor and other AI apps
   copilot check --backend ibm_kingston [--line 117,105,...] [--confirm-qpu]
                                  run the kit (preview only unless --confirm-qpu)
 
@@ -74,6 +78,19 @@ if (command == "watch")
     using var cts = new CancellationTokenSource();
     Console.CancelKeyPress += (_, e) => { e.Cancel = true; cts.Cancel(); };
     await new Watcher(runs, memory, hook, Console.WriteLine).RunAsync(every, cts.Token);
+    return 0;
+}
+
+if (command == "mcp")
+{
+    // stdout carries only JSON-RPC; everything else goes to stderr.
+    var full = Path.GetFullPath(runs);
+    if (new RunStore(full).Runs.Count == 0) Console.Error.WriteLine($"[mcp] warning: no kit results under {full}");
+    Tools Fresh() => new(new Analyzer(new RunStore(full), ChipMap.Kingston(), memory), Path.GetFullPath(reportPath));
+    var stdout = new StreamWriter(Console.OpenStandardOutput(), new UTF8Encoding(false)) { AutoFlush = true };
+    var stdin = new StreamReader(Console.OpenStandardInput(), new UTF8Encoding(false));
+    Console.Error.WriteLine($"[mcp] Syndromics Copilot MCP server, runs: {full}");
+    await new McpServer(Fresh, Console.Error).RunAsync(stdin, stdout);
     return 0;
 }
 

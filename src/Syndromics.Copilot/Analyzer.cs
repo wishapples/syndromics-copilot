@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 
 namespace Syndromics.Copilot;
@@ -153,8 +153,8 @@ public sealed class Analyzer
                 : $"Held-out logical error ({d.Splits} splits, {d.TestShots:N0} test shots): calibration {Names.Pct(d.Calibration)}, re-weighting {Names.Pct(d.Reweighting)}, Syndromics {Names.Pct(d.Syndromics)}, Syndromics + adaptive {Names.Pct(d.SyndromicsAdaptive)} (re-weighting + adaptive {Names.Pct(d.ReweightingAdaptive)}).");
         if (r.Comparison is { } c)
             sb.AppendLine(c.Kind == "transfer"
-                ? $"Transfer test: model from the previous circuit, no new data: {c.FrozenErrors} errors vs {c.CalibrationErrors} for the calibration on {c.TestShots:N0} shots" +
-                  (c.ReweightingOnNewData.Count > 0 ? $"; re-weighting needed {c.ReweightingOnNewData[^1].TrainShots:N0} new shots to reach {c.ReweightingOnNewData[^1].Errors}." : ".")
+                ? $"Transfer test: model from the previous circuit, no new data: {c.FrozenErrors} errors ({c.FrozenAdaptiveErrors} with adaptive decoding) vs {c.CalibrationErrors} for the calibration on {c.TestShots:N0} shots" +
+                  (c.ReweightingOnNewData.Count > 0 ? TransferVerdict(c.FrozenErrors, c.ReweightingOnNewData[^1].Errors, c.ReweightingOnNewData[^1].TrainShots) : ".")
                 : $"Frozen model from the previous run: {c.FrozenErrors} errors vs {c.CalibrationErrors} for the fresh calibration ({c.FrozenAdaptiveErrors} with adaptive decoding) on {c.TestShots:N0} shots.");
         foreach (var f in r.Flagged.Take(mgr ? 2 : 5))
             sb.AppendLine(mgr ? $"Problem part: {f.Component}, about {Names.X(f.Ratio)} worse than the published figure."
@@ -208,5 +208,16 @@ public sealed class Analyzer
         if ((DateTimeOffset.UtcNow - Store.Latest.RunAtUtc).TotalHours > 24)
             s.Add($"The latest run is {(int)(DateTimeOffset.UtcNow - Store.Latest.RunAtUtc).TotalDays} day(s) old; rerun the check to see what drifted.");
         return s;
+    }
+
+    /// <summary>Honest one-line comparison with re-weighting trained on new data. Error counts are Poisson-like, so a gap
+    /// smaller than twice its counting uncertainty, 2*sqrt(a+b), is reported as a tie.</summary>
+    public static string TransferVerdict(int frozen, int reweighting, int shots)
+    {
+        if (Math.Abs(frozen - reweighting) <= 2 * Math.Sqrt(frozen + reweighting))
+            return $"; about the same as re-weighting trained on {shots:N0} new shots ({reweighting}), with none.";
+        return frozen < reweighting
+            ? $"; better than re-weighting trained on {shots:N0} new shots ({reweighting})."
+            : $"; re-weighting trained on {shots:N0} new shots does better ({reweighting}), but needs that new data.";
     }
 }

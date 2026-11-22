@@ -14,7 +14,16 @@ void Check(bool ok, string what)
 
 string samples = new[] { "samples/kingston", "../samples/kingston", "../../samples/kingston", "../../../samples/kingston", "../../../../samples/kingston" }
     .First(Directory.Exists);
-var store = new RunStore(samples);
+// Most checks describe the state after run 3 (19 Nov); run 6 is checked separately at the end.
+string upTo3 = Path.Combine(Path.GetTempPath(), "copilot_selftest_runs1to3");
+if (Directory.Exists(upTo3)) Directory.Delete(upTo3, true);
+foreach (var r in new[] { "run1", "run2", "run3" })
+    foreach (var f in Directory.GetFiles(Path.Combine(samples, r, "results")))
+    {
+        Directory.CreateDirectory(Path.Combine(upTo3, r, "results"));
+        File.Copy(f, Path.Combine(upTo3, r, "results", Path.GetFileName(f)));
+    }
+var store = new RunStore(upTo3);
 var memory = Memory.InMemory();
 var a = new Analyzer(store, ChipMap.Kingston(), memory);
 var tools = new Tools(a, Path.Combine(Path.GetTempPath(), "copilot_selftest_report.html"));
@@ -83,6 +92,33 @@ Check(answer.Contains("q129"), "final answer returned after a tool call");
 Check(seen.Count == 2 && seen[0]["tools"] is JsonArray { Count: > 5 }, "tool definitions sent to the model");
 var toolMsg = (seen[1]["messages"] as JsonArray)!.Last()!;
 Check(toolMsg["role"]!.ToString() == "tool" && toolMsg["content"]!.ToString().Contains("q129"), "tool result (real data) sent back to the model");
+
+// Run 6 (21 Nov): the q129-q128 fault cleared; the transfer verdict must not claim a win it did not get.
+var all = new Analyzer(new RunStore(samples), ChipMap.Kingston(), Memory.InMemory());
+Check(all.Store.Runs.Count == 4 && all.Store.Latest.JobId == "dc0os4mq4uuc73a2u790", "run 6 loaded as the latest run");
+Check(all.Findings(includeIgnored: true).First(f => f.Component == "q129-q128 two-qubit gate").Trend == Trend.Resolved, "q129-q128 fault shown as resolved after run 6");
+Check(all.WhatChanged().Any(l => l.StartsWith("RECOVERED: q129-q128")), "what changed reports the recovery");
+Check(Analyzer.TransferVerdict(136, 123, 15000).Contains("about the same") && Analyzer.TransferVerdict(200, 120, 15000).Contains("does better") && Analyzer.TransferVerdict(40, 39, 15000).Contains("about the same")
+      && Analyzer.TransferVerdict(69, 77, 15000).Contains("about the same") && Analyzer.TransferVerdict(30, 77, 15000).Contains("better than"), "transfer verdict is honest");
+
+// MCP server: the protocol a Claude Desktop / VS Code / Cursor client speaks.
+var mcpLog = new StringWriter();
+var mcp = new McpServer(() => new Tools(all, Path.Combine(Path.GetTempPath(), "copilot_selftest_mcp.html")), mcpLog);
+JsonObject Rpc(string line) => (JsonObject)JsonNode.Parse(mcp.Handle(line)!)!;
+var init = Rpc("{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-03-26\",\"capabilities\":{}}}");
+Check(init["result"]!["protocolVersion"]!.ToString() == "2025-03-26" && init["result"]!["capabilities"]!["tools"] is not null, "mcp: initialize negotiates the client's version");
+Check(Rpc("{\"jsonrpc\":\"2.0\",\"id\":9,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"1999-01-01\"}}")["result"]!["protocolVersion"]!.ToString() == McpServer.SupportedVersions[0], "mcp: unknown version falls back to the latest");
+Check(mcp.Handle("{\"jsonrpc\":\"2.0\",\"method\":\"notifications/initialized\"}") is null, "mcp: notifications get no reply");
+var listed = (JsonArray)Rpc("{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/list\"}")["result"]!["tools"]!;
+Check(listed.Count == 13 && listed.All(t => t!["inputSchema"]!["type"]!.ToString() == "object"), "mcp: 13 tools with input schemas");
+Check(listed.First(t => t!["name"]!.ToString() == "remember")!["annotations"]!["readOnlyHint"]!.GetValue<bool>() == false
+      && listed.First(t => t!["name"]!.ToString() == "findings")!["annotations"]!["readOnlyHint"]!.GetValue<bool>(), "mcp: read-only hints");
+var called = Rpc("{\"jsonrpc\":\"2.0\",\"id\":\"a\",\"method\":\"tools/call\",\"params\":{\"name\":\"what_changed\",\"arguments\":{}}}");
+Check(called["id"]!.ToString() == "a" && called["result"]!["isError"]!.GetValue<bool>() == false
+      && called["result"]!["content"]![0]!["text"]!.ToString().Contains("RECOVERED: q129-q128"), "mcp: tools/call returns real findings, string id kept");
+Check(Rpc("{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/call\",\"params\":{\"name\":\"nope\"}}")["result"]!["isError"]!.GetValue<bool>(), "mcp: unknown tool is an error result");
+Check(Rpc("{\"jsonrpc\":\"2.0\",\"id\":4,\"method\":\"bogus\"}")["error"]!["code"]!.GetValue<int>() == -32601, "mcp: unknown method -32601");
+Check(Rpc("not json")["error"]!["code"]!.GetValue<int>() == -32700, "mcp: parse error -32700");
 
 Console.WriteLine($"\n{passed} passed, {failed} failed");
 return failed == 0 ? 0 : 1;
